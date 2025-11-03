@@ -506,7 +506,7 @@
 		" Massive quality of life mapping when navigating the help pages.
 		" Like the <C-]> keybind which opens links, however this keybind will open links in a new tab.
 		"map <C-}>			:tabnew
-		nnoremap <buffer> <CR> :execute 'tabnew '.getline('.')<CR>
+		"nnoremap <buffer> <CR> :execute 'tabnew '.getline('.')<CR>
 		
 
 	"--------------------[4.3.1] Windows/Window-Splits mappings for movement and resizing.

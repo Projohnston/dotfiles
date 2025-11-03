@@ -567,6 +567,12 @@ export DISPLAY=192.168.1.30:0.0
 
 # Adding this for pipx packages as per the instructions from pipx; bashcompinit needs to be enabled
 # to work.
-autoload -U bashcompinit
-bashcompinit
-eval "$(register-python-argcomplete pipx)"
+#autoload -U bashcompinit
+#bashcompinit
+#eval "$(register-python-argcomplete pipx)"
+
+# (((APPARENTLY BREAKS RANGER ***AND*** DOESNT EVEN FIX THE FUCKING ISSUE.)))
+# Fixes the issue when right-click pasting into terminal (particularly in SSH sessions), the last
+# character gets capatalized or uncapitalized (the function of the tilda ~ key) when using vim
+# layout key layout.
+# set enable-bracketed-paste off

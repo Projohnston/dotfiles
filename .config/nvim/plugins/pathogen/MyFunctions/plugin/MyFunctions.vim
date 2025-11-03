@@ -395,6 +395,17 @@ cnoreabbrev kms call DeleteCurrentOpenFile()
 	endfunction
 	vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 
+" Function and command mapping that allows you to jump to a specific word number (word index) in the
+" open file in the current buffer.
+function! GoToWord(num)
+  " Ensure we start at beginning of file
+  normal! gg
+  " Move (num-1) words forward
+	execute 'normal! ' . (a:num-1) . 'w'
+endfunction
+
+command! -nargs=1 GoWord call GoToWord(<args>)
+cnoreabbrev gw :GoWord 
 
 "##################################################################################################"
 "##################################################################################################"

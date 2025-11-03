@@ -99,17 +99,31 @@ function mkcd(){
 
 # Alias for colored cat outputs (bat uses a man page type interface with scrolling, whereas pcat is
 # just pygmentized cat standard output in the terminal).
-function pcat(){
-	#[[ -f "$1" ]] && { cat "$1" | pygmentize -f terminal256 -O style=monokai } || \
-	#	pygmentize -f terminal256 -O style=monokai
+pcat() {
+  local cmd=(pygmentize -f terminal256 -O style=monokai)
+
+  if [ -t 0 ]; then
+    # stdin is from terminal (no pipe), check for args
+    if [ "$#" -eq 0 ]; then
+      echo "Usage: pcat <file1> [file2 ...] or pipe input to it" >&2
+      return 1
+    fi
+    "${cmd[@]}" "$@"
+  else
+    # stdin is piped
+    "${cmd[@]}" -
+  fi
+
+  # These two bottom conditionals need to remain or the entire function wont exist. These are the
+  # conditionals I had originally written.
+	[[ -f "$1" ]] && { cat "$1" | pygmentize -f terminal256 -O style=monokai } || \
+		pygmentize -f terminal256 -O style=monokai
 
 	[[ -f "$1" ]] && cat "$1" | pygmentize -f terminal256 -O style=monokai && return 0
 	pygmentize -f terminal256 -O style=monokai
 
 	# Taking/using the solution given from the stackexchange answer linked below.
 	#	https://unix.stackexchange.com/a/301432
-
-	if [ $# == 0 ]
 
 }
 
@@ -289,6 +303,22 @@ function disks(){
 		echo
 		echo "#####################################################################################"
 		echo "################################ NVMe M.2 SSD Drives ################################"
+		echo "#####################################################################################"
+		sudo fdisk -l /dev/nvme[0-9]n[0-9] 2>/dev/null | cat -s
+		echo
+		echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+	fi
+
+	# Check if there are any SD or microSD cards plugged in (following the naming convention of:
+	# "/dev/mmcblk[0-9]p?[0-1]" for example: "/dev/mmcblk0p1") and display any/all drives
+	# present/detected; hide results if not.
+	#	[[ "$(ls /dev/nvme[0-9]n[0-9] 2>/dev/null)" ]] && \	# (Old "one-line" conditional solution).
+	if [ "$(ls /dev/mmcblk[0-9]n[0-9] 2>/dev/null)" ]
+	if 	'(/dev/)?(sd[a-z]+[0-9]*|mmcblk[0-9]+p?[0-9]*)'
+	then
+		echo
+		echo "#####################################################################################"
+		echo "############################### SD and MicroSD Cards ################################"
 		echo "#####################################################################################"
 		sudo fdisk -l /dev/nvme[0-9]n[0-9] 2>/dev/null | cat -s
 		echo
