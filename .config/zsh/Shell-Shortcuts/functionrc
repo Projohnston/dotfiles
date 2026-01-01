@@ -111,7 +111,7 @@ pcat() {
     "${cmd[@]}" "$@"
   else
     # stdin is piped
-    "${cmd[@]}" -
+    "${cmd[@]}"
   fi
 
   # These two bottom conditionals need to remain or the entire function wont exist. These are the
