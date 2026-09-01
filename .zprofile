@@ -4,3 +4,6 @@ export ZDOTDIR="$HOME/.config/zsh"
 # Changed this to the zshrc file; however qt5ct requires removing the
 # $QT_STYLE_OVERRIDE environment variable.
 #export QT_STYLE_OVERRIDE=kvantum
+
+# Hermes Agent — ensure ~/.local/bin is on PATH
+export PATH="$HOME/.local/bin:$PATH"

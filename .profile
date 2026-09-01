@@ -41,3 +41,13 @@ export ZDOTDIR="$HOME/.config/zsh"
 # export XDG_CONFIG_HOME="${HOME}/.config
 
 . "$HOME/.local/bin/env"
+
+# Hermes Agent — ensure ~/.local/bin is on PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+# >>> mpd/wsl music setup >>>
+export QT_QPA_PLATFORMTHEME=qt5ct
+export MPD_HOST=192.168.0.121
+export MPD_PORT=6600
+export PATH="$HOME/.local/bin:$PATH"
+# <<< mpd/wsl music setup <<<
